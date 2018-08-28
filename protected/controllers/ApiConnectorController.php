@@ -26,7 +26,7 @@ class ApiConnectorController extends Controller
         $api->setLogger( new CurlLogger() );
 	}
 
-	public function fireReport( $type = NULL, $date_start = NULL, $date_end = NULL )
+	public function fireReport( $type = NULL, $params = [], $date_start = NULL, $date_end = NULL )
     {
         
        
