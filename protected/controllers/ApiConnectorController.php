@@ -17,10 +17,10 @@ class ApiConnectorController extends Controller
     
 	public function connect( $account_id = 'act_290942025017254')
 	{
-        $this->access_token = 'EAAD77bHR8g0BABVPmU9jnPF1cT8BGWv8SXowKcdVtqae8wbk4lZAENDUsf0XL5FryPSTBYNJvCOTNe2hKaBPbZBfb0hTPCktvRfhLrsLkPkuXWwvIM46NpAEZCflAlCagUcnSOitoxUerp5iDA5yEHrLObJFE4ZAGIolAk3TOtRXHMNPBNj7Tv3P32zd3yl3xa1LsqbKVKZBK9GkSepe3obspDDJA6WoZD';
+        $this->app_id        = '276998309147149';
+        $this->app_secret    = 'b046d3924bbcbf520a6cdc17dfea40ca';
+        $this->access_token  = 'EAAD77bHR8g0BABVPmU9jnPF1cT8BGWv8SXowKcdVtqae8wbk4lZAENDUsf0XL5FryPSTBYNJvCOTNe2hKaBPbZBfb0hTPCktvRfhLrsLkPkuXWwvIM46NpAEZCflAlCagUcnSOitoxUerp5iDA5yEHrLObJFE4ZAGIolAk3TOtRXHMNPBNj7Tv3P32zd3yl3xa1LsqbKVKZBK9GkSepe3obspDDJA6WoZD';
         $this->ad_account_id = $account_id;
-        $this->app_secret = 'b046d3924bbcbf520a6cdc17dfea40ca';
-        $this->app_id = '276998309147149';
         
         $api = Api::init( $this->app_id, $this->app_secret, $this->access_token );
         $api->setLogger( new CurlLogger() );
