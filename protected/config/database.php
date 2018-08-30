@@ -8,7 +8,7 @@ return array(
 	'connectionString' => 'mysql:host=localhost;dbname=ovrmind_db',
 	'emulatePrepare' => true,
 	'username' => 'root',
-	'password' => '2R9xKc>xZiY)ardE',
+	'password' => 'root',
 	'charset' => 'utf8',
 	
 );

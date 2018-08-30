@@ -33,7 +33,7 @@ class FacebookDataController extends Controller
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array('create','update'),
-				'users'=>array('@'),
+				'users'=>array('*'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('admin','delete'),
@@ -142,6 +142,33 @@ class FacebookDataController extends Controller
 			'model'=>$model,
 		));
 	}
+    
+    /**
+     * Displays the contact page
+     */
+    public function actionFire()
+    {
+//        $model = new FacebookData;
+//        if(isset($_POST['params'])) {
+//
+//            $model->attributes = $_POST['params'];
+//            if($model->validate())
+//            {
+//                $name='=?UTF-8?B?'.base64_encode($model->name).'?=';
+//                $subject='=?UTF-8?B?'.base64_encode($model->subject).'?=';
+//                $headers="From: $name <{$model->email}>\r\n".
+//                    "Reply-To: {$model->email}\r\n".
+//                    "MIME-Version: 1.0\r\n".
+//                    "Content-Type: text/plain; charset=UTF-8";
+//
+//                mail(Yii::app()->params['adminEmail'],$subject,$model->body,$headers);
+//                Yii::app()->user->setFlash('contact','Thank you for contacting us. We will respond to you as soon as possible.');
+//                $this->refresh();
+//            }
+//        }
+//        $this->render('contact',array('model'=>$model));
+        return "Lorem";
+    }
 
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
