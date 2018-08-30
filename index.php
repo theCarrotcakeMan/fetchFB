@@ -3,6 +3,8 @@
 // change the following paths if necessary
 $yii=dirname(__FILE__).'/../yii/framework/yii.php';
 $config=dirname(__FILE__).'/protected/config/main.php';
+// Include constants file
+include_once ('protected/config/catalogue.php');
 
 // remove the following lines when in production mode
 defined('YII_DEBUG') or define('YII_DEBUG',true);

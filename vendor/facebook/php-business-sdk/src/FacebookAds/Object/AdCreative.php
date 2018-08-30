@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2014-present, Facebook, Inc. All rights reserved.
+ * Copyright (c) 2015-present, Facebook, Inc. All rights reserved.
  *
  * You are hereby granted a non-exclusive, worldwide, royalty-free license to
  * use, copy, modify, and distribute this software in source code or binary
@@ -24,17 +24,36 @@
 
 namespace FacebookAds\Object;
 
+use FacebookAds\ApiRequest;
 use FacebookAds\Cursor;
+use FacebookAds\Http\RequestInterface;
+use FacebookAds\TypeChecker;
 use FacebookAds\Object\Fields\AdCreativeFields;
-use FacebookAds\Object\Traits\FieldValidation;
+use FacebookAds\Object\Values\AdCreativeApplinkTreatmentValues;
+use FacebookAds\Object\Values\AdCreativeAuthorizationCategoryValues;
+use FacebookAds\Object\Values\AdCreativeCallToActionTypeValues;
+use FacebookAds\Object\Values\AdCreativeDynamicAdVoiceValues;
+use FacebookAds\Object\Values\AdCreativeObjectTypeValues;
+use FacebookAds\Object\Values\AdCreativeOperatorValues;
+use FacebookAds\Object\Values\AdCreativeStatusValues;
+use FacebookAds\Object\Values\AdPreviewAdFormatValues;
 use FacebookAds\Object\Traits\AdLabelAwareCrudObjectTrait;
 
+/**
+ * This class is auto-generated.
+ *
+ * For any issues or feature requests related to this class, please let us know
+ * on github and we'll fix in our codegen framework. We'll not be able to accept
+ * pull request for this class.
+ *
+ */
+
 class AdCreative extends AbstractCrudObject {
-  use FieldValidation;
+
   use AdLabelAwareCrudObjectTrait;
 
   /**
-   * @return string
+   * @deprecated getEndpoint function is deprecated
    */
   protected function getEndpoint() {
     return 'adcreatives';
@@ -47,14 +66,184 @@ class AdCreative extends AbstractCrudObject {
     return AdCreativeFields::getInstance();
   }
 
-  /**
-   * @param array $fields
-   * @param array $params
-   * @return Cursor
-   */
-  public function getAdPreviews(
-    array $fields = array(), array $params = array()) {
-    return $this->getManyByConnection(
-      AdPreview::className(), $fields, $params, 'previews');
+  protected static function getReferencedEnums() {
+    $ref_enums = array();
+    $ref_enums['ApplinkTreatment'] = AdCreativeApplinkTreatmentValues::getInstance()->getValues();
+    $ref_enums['CallToActionType'] = AdCreativeCallToActionTypeValues::getInstance()->getValues();
+    $ref_enums['ObjectType'] = AdCreativeObjectTypeValues::getInstance()->getValues();
+    $ref_enums['Status'] = AdCreativeStatusValues::getInstance()->getValues();
+    $ref_enums['AuthorizationCategory'] = AdCreativeAuthorizationCategoryValues::getInstance()->getValues();
+    $ref_enums['DynamicAdVoice'] = AdCreativeDynamicAdVoiceValues::getInstance()->getValues();
+    $ref_enums['Operator'] = AdCreativeOperatorValues::getInstance()->getValues();
+    return $ref_enums;
   }
+
+  protected function setDataTrigger($data) {
+    if (array_key_exists('id', $data)) {
+      $this->data['creative_id'] = $data['id'];
+    }
+  }
+
+  public function deleteAdLabels(array $fields = array(), array $params = array(), $pending = false) {
+    $this->assureId();
+
+    $param_types = array(
+      'adlabels' => 'list<Object>',
+    );
+    $enums = array(
+    );
+
+    $request = new ApiRequest(
+      $this->api,
+      $this->data['id'],
+      RequestInterface::METHOD_DELETE,
+      '/adlabels',
+      new AbstractCrudObject(),
+      'EDGE',
+      array(),
+      new TypeChecker($param_types, $enums)
+    );
+    $request->addParams($params);
+    $request->addFields($fields);
+    return $pending ? $request : $request->execute();
+  }
+
+  public function createAdLabel(array $fields = array(), array $params = array(), $pending = false) {
+    $this->assureId();
+
+    $param_types = array(
+      'adlabels' => 'list<Object>',
+    );
+    $enums = array(
+    );
+
+    $request = new ApiRequest(
+      $this->api,
+      $this->data['id'],
+      RequestInterface::METHOD_POST,
+      '/adlabels',
+      new AdLabel(),
+      'EDGE',
+      AdLabel::getFieldsEnum()->getValues(),
+      new TypeChecker($param_types, $enums)
+    );
+    $request->addParams($params);
+    $request->addFields($fields);
+    return $pending ? $request : $request->execute();
+  }
+
+  public function getPreviews(array $fields = array(), array $params = array(), $pending = false) {
+    $this->assureId();
+
+    $param_types = array(
+      'ad_format' => 'ad_format_enum',
+      'dynamic_creative_spec' => 'Object',
+      'end_date' => 'datetime',
+      'height' => 'unsigned int',
+      'place_page_id' => 'int',
+      'post' => 'Object',
+      'product_item_ids' => 'list<string>',
+      'start_date' => 'datetime',
+      'width' => 'unsigned int',
+    );
+    $enums = array(
+      'ad_format_enum' => AdPreviewAdFormatValues::getInstance()->getValues(),
+    );
+
+    $request = new ApiRequest(
+      $this->api,
+      $this->data['id'],
+      RequestInterface::METHOD_GET,
+      '/previews',
+      new AdPreview(),
+      'EDGE',
+      AdPreview::getFieldsEnum()->getValues(),
+      new TypeChecker($param_types, $enums)
+    );
+    $request->addParams($params);
+    $request->addFields($fields);
+    return $pending ? $request : $request->execute();
+  }
+
+  public function deleteSelf(array $fields = array(), array $params = array(), $pending = false) {
+    $this->assureId();
+
+    $param_types = array(
+      'account_id' => 'string',
+      'adlabels' => 'list<Object>',
+      'name' => 'string',
+      'status' => 'status_enum',
+    );
+    $enums = array(
+      'status_enum' => AdCreativeStatusValues::getInstance()->getValues(),
+    );
+
+    $request = new ApiRequest(
+      $this->api,
+      $this->data['id'],
+      RequestInterface::METHOD_DELETE,
+      '/',
+      new AbstractCrudObject(),
+      'NODE',
+      array(),
+      new TypeChecker($param_types, $enums)
+    );
+    $request->addParams($params);
+    $request->addFields($fields);
+    return $pending ? $request : $request->execute();
+  }
+
+  public function getSelf(array $fields = array(), array $params = array(), $pending = false) {
+    $this->assureId();
+
+    $param_types = array(
+      'thumbnail_height' => 'unsigned int',
+      'thumbnail_width' => 'unsigned int',
+    );
+    $enums = array(
+    );
+
+    $request = new ApiRequest(
+      $this->api,
+      $this->data['id'],
+      RequestInterface::METHOD_GET,
+      '/',
+      new AdCreative(),
+      'NODE',
+      AdCreative::getFieldsEnum()->getValues(),
+      new TypeChecker($param_types, $enums)
+    );
+    $request->addParams($params);
+    $request->addFields($fields);
+    return $pending ? $request : $request->execute();
+  }
+
+  public function updateSelf(array $fields = array(), array $params = array(), $pending = false) {
+    $this->assureId();
+
+    $param_types = array(
+      'account_id' => 'string',
+      'adlabels' => 'list<Object>',
+      'name' => 'string',
+      'status' => 'status_enum',
+    );
+    $enums = array(
+      'status_enum' => AdCreativeStatusValues::getInstance()->getValues(),
+    );
+
+    $request = new ApiRequest(
+      $this->api,
+      $this->data['id'],
+      RequestInterface::METHOD_POST,
+      '/',
+      new AdCreative(),
+      'NODE',
+      AdCreative::getFieldsEnum()->getValues(),
+      new TypeChecker($param_types, $enums)
+    );
+    $request->addParams($params);
+    $request->addFields($fields);
+    return $pending ? $request : $request->execute();
+  }
+
 }

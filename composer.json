@@ -1,7 +1,7 @@
 {
-  "name": "FBfetch",
+  "name": "FBComponent",
   "description":"Fetch data from FB business api",
   "require": {
-    "facebook/php-business-sdk": "2.5.*"
+    "facebook/php-business-sdk": "^3.1.1"
   }
 }

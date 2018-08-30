@@ -53,7 +53,7 @@ class AdAccountTest extends AbstractCrudObjectTestCase {
 
   public function tearDown() {
     if ($this->adLabel !== null) {
-      $this->adLabel->delete();
+      $this->adLabel->deleteSelf();
       $this->adLabel = null;
     }
 
@@ -111,7 +111,6 @@ class AdAccountTest extends AbstractCrudObjectTestCase {
     $this->assertCanFetchConnection($account, 'getAdsPixels');
     $this->assertCanFetchConnection($account, 'getAdVideos');
     $this->assertCanFetchConnection($account, 'getBroadCategoryTargeting');
-    $this->assertCanFetchConnection($account, 'getConnectionObjects');
     $this->assertCanFetchConnection($account, 'getCustomAudiences');
     $this->assertCanFetchConnection($account, 'getConversionPixels');
     $this->assertCanFetchConnection($account, 'getPartnerCategories');

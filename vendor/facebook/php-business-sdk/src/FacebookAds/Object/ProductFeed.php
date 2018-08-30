@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2014-present, Facebook, Inc. All rights reserved.
+ * Copyright (c) 2015-present, Facebook, Inc. All rights reserved.
  *
  * You are hereby granted a non-exclusive, worldwide, royalty-free license to
  * use, copy, modify, and distribute this software in source code or binary
@@ -24,15 +24,29 @@
 
 namespace FacebookAds\Object;
 
-use FacebookAds\Object\Fields\ProductFeedFields;
-use FacebookAds\Object\Traits\FieldValidation;
+use FacebookAds\ApiRequest;
 use FacebookAds\Cursor;
+use FacebookAds\Http\RequestInterface;
+use FacebookAds\TypeChecker;
+use FacebookAds\Object\Fields\ProductFeedFields;
+use FacebookAds\Object\Values\ProductFeedDelimiterValues;
+use FacebookAds\Object\Values\ProductFeedEncodingValues;
+use FacebookAds\Object\Values\ProductFeedFeedTypeValues;
+use FacebookAds\Object\Values\ProductFeedQuotedFieldsModeValues;
+
+/**
+ * This class is auto-generated.
+ *
+ * For any issues or feature requests related to this class, please let us know
+ * on github and we'll fix in our codegen framework. We'll not be able to accept
+ * pull request for this class.
+ *
+ */
 
 class ProductFeed extends AbstractCrudObject {
-  use FieldValidation;
 
   /**
-   * @return string
+   * @deprecated getEndpoint function is deprecated
    */
   protected function getEndpoint() {
     return 'product_feeds';
@@ -45,25 +59,228 @@ class ProductFeed extends AbstractCrudObject {
     return ProductFeedFields::getInstance();
   }
 
-  /**
-   * @param array $fields
-   * @param array $params
-   * @return Cursor
-   */
-  public function getUploads(array $fields = array(), array $params = array()) {
-    return $this->getManyByConnection(
-      ProductFeedUpload::className(), $fields, $params);
+  protected static function getReferencedEnums() {
+    $ref_enums = array();
+    $ref_enums['Delimiter'] = ProductFeedDelimiterValues::getInstance()->getValues();
+    $ref_enums['QuotedFieldsMode'] = ProductFeedQuotedFieldsModeValues::getInstance()->getValues();
+    $ref_enums['Encoding'] = ProductFeedEncodingValues::getInstance()->getValues();
+    $ref_enums['FeedType'] = ProductFeedFeedTypeValues::getInstance()->getValues();
+    return $ref_enums;
   }
 
-  /**
-   * @param array $fields
-   * @param array $params
-   * @return Cursor
-   */
-  public function getProducts(
-    array $fields = array(),
-    array $params = array()) {
-    return $this->getManyByConnection(
-      Product::className(), $fields, $params);
+
+  public function getProducts(array $fields = array(), array $params = array(), $pending = false) {
+    $this->assureId();
+
+    $param_types = array(
+      'bulk_pagination' => 'bool',
+      'filter' => 'Object',
+    );
+    $enums = array(
+    );
+
+    $request = new ApiRequest(
+      $this->api,
+      $this->data['id'],
+      RequestInterface::METHOD_GET,
+      '/products',
+      new ProductItem(),
+      'EDGE',
+      ProductItem::getFieldsEnum()->getValues(),
+      new TypeChecker($param_types, $enums)
+    );
+    $request->addParams($params);
+    $request->addFields($fields);
+    return $pending ? $request : $request->execute();
   }
+
+  public function createRule(array $fields = array(), array $params = array(), $pending = false) {
+    $this->assureId();
+
+    $param_types = array(
+      'attribute' => 'string',
+      'params' => 'map',
+      'rule_type' => 'rule_type_enum',
+    );
+    $enums = array(
+      'rule_type_enum' => array(
+        'mapping_rule',
+        'value_mapping_rule',
+        'letter_case_rule',
+        'fallback_rule',
+        'regex_replace_rule',
+      ),
+    );
+
+    $request = new ApiRequest(
+      $this->api,
+      $this->data['id'],
+      RequestInterface::METHOD_POST,
+      '/rules',
+      new AbstractCrudObject(),
+      'EDGE',
+      array(),
+      new TypeChecker($param_types, $enums)
+    );
+    $request->addParams($params);
+    $request->addFields($fields);
+    return $pending ? $request : $request->execute();
+  }
+
+  public function getUploads(array $fields = array(), array $params = array(), $pending = false) {
+    $this->assureId();
+
+    $param_types = array(
+    );
+    $enums = array(
+    );
+
+    $request = new ApiRequest(
+      $this->api,
+      $this->data['id'],
+      RequestInterface::METHOD_GET,
+      '/uploads',
+      new ProductFeedUpload(),
+      'EDGE',
+      ProductFeedUpload::getFieldsEnum()->getValues(),
+      new TypeChecker($param_types, $enums)
+    );
+    $request->addParams($params);
+    $request->addFields($fields);
+    return $pending ? $request : $request->execute();
+  }
+
+  public function createUpload(array $fields = array(), array $params = array(), $pending = false) {
+    $this->assureId();
+
+    $param_types = array(
+      'file' => 'file',
+      'password' => 'string',
+      'update_only' => 'bool',
+      'url' => 'string',
+      'username' => 'string',
+    );
+    $enums = array(
+    );
+
+    $request = new ApiRequest(
+      $this->api,
+      $this->data['id'],
+      RequestInterface::METHOD_POST,
+      '/uploads',
+      new ProductFeedUpload(),
+      'EDGE',
+      ProductFeedUpload::getFieldsEnum()->getValues(),
+      new TypeChecker($param_types, $enums)
+    );
+    $request->addParams($params);
+    $request->addFields($fields);
+    return $pending ? $request : $request->execute();
+  }
+
+  public function getVehicles(array $fields = array(), array $params = array(), $pending = false) {
+    $this->assureId();
+
+    $param_types = array(
+      'bulk_pagination' => 'bool',
+      'filter' => 'Object',
+    );
+    $enums = array(
+    );
+
+    $request = new ApiRequest(
+      $this->api,
+      $this->data['id'],
+      RequestInterface::METHOD_GET,
+      '/vehicles',
+      new AbstractCrudObject(),
+      'EDGE',
+      array(),
+      new TypeChecker($param_types, $enums)
+    );
+    $request->addParams($params);
+    $request->addFields($fields);
+    return $pending ? $request : $request->execute();
+  }
+
+  public function deleteSelf(array $fields = array(), array $params = array(), $pending = false) {
+    $this->assureId();
+
+    $param_types = array(
+    );
+    $enums = array(
+    );
+
+    $request = new ApiRequest(
+      $this->api,
+      $this->data['id'],
+      RequestInterface::METHOD_DELETE,
+      '/',
+      new AbstractCrudObject(),
+      'NODE',
+      array(),
+      new TypeChecker($param_types, $enums)
+    );
+    $request->addParams($params);
+    $request->addFields($fields);
+    return $pending ? $request : $request->execute();
+  }
+
+  public function getSelf(array $fields = array(), array $params = array(), $pending = false) {
+    $this->assureId();
+
+    $param_types = array(
+    );
+    $enums = array(
+    );
+
+    $request = new ApiRequest(
+      $this->api,
+      $this->data['id'],
+      RequestInterface::METHOD_GET,
+      '/',
+      new ProductFeed(),
+      'NODE',
+      ProductFeed::getFieldsEnum()->getValues(),
+      new TypeChecker($param_types, $enums)
+    );
+    $request->addParams($params);
+    $request->addFields($fields);
+    return $pending ? $request : $request->execute();
+  }
+
+  public function updateSelf(array $fields = array(), array $params = array(), $pending = false) {
+    $this->assureId();
+
+    $param_types = array(
+      'default_currency' => 'string',
+      'deletion_enabled' => 'bool',
+      'delimiter' => 'delimiter_enum',
+      'encoding' => 'encoding_enum',
+      'name' => 'string',
+      'quoted_fields_mode' => 'quoted_fields_mode_enum',
+      'schedule' => 'string',
+      'update_schedule' => 'string',
+    );
+    $enums = array(
+      'delimiter_enum' => ProductFeedDelimiterValues::getInstance()->getValues(),
+      'encoding_enum' => ProductFeedEncodingValues::getInstance()->getValues(),
+      'quoted_fields_mode_enum' => ProductFeedQuotedFieldsModeValues::getInstance()->getValues(),
+    );
+
+    $request = new ApiRequest(
+      $this->api,
+      $this->data['id'],
+      RequestInterface::METHOD_POST,
+      '/',
+      new ProductFeed(),
+      'NODE',
+      ProductFeed::getFieldsEnum()->getValues(),
+      new TypeChecker($param_types, $enums)
+    );
+    $request->addParams($params);
+    $request->addFields($fields);
+    return $pending ? $request : $request->execute();
+  }
+
 }

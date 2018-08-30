@@ -35,11 +35,6 @@ class RequestException extends Exception {
   protected $response;
 
   /**
-   * @var int Status code for the response causing the exception
-   */
-  protected $statusCode;
-
-  /**
    * @var int|null
    */
   protected $errorCode;
@@ -75,18 +70,11 @@ class RequestException extends Exception {
   protected $errorBlameFieldSpecs;
 
   /**
-   * FIXME - v2.6 breaking change:
-   *   make interface __contruct(ResponseInterface $response)
-   *
-   * @param array $response_data The response from the Graph API
-   * @param int $status_code
+   * @param ResponseInterface $response
    */
-  public function __construct(
-    array $response_data,
-    $status_code) {
-
-    $this->statusCode = $status_code;
-    $error_data = static::getErrorData($response_data);
+  public function __construct(ResponseInterface $response) {
+    $this->response = $response;
+    $error_data = static::getErrorData($response);
 
     parent::__construct($error_data['message'], $error_data['code']);
 
@@ -104,33 +92,35 @@ class RequestException extends Exception {
   }
 
   /**
-   * @param ResponseInterface $response
-   * @return $this
-   */
-  public function setResponse(ResponseInterface $response) {
-    $this->response = $response;
-
-    return $this;
-  }
-
-  /**
-   * @param array $array
+   * @param array|string $array
    * @param string|int $key
    * @param mixed $default
    * @return mixed
    */
-  protected static function idx(array $array, $key, $default = null) {
+  protected static function idx($array, $key, $default = null) {
+    if (is_string($array)) {
+      $array = json_decode($array, true);
+    }
     return array_key_exists($key, $array)
       ? $array[$key]
       : $default;
   }
 
   /**
-   * @param array $response_data
+   * @param ResponseInterface $response
    * @return array
    */
-  protected static function getErrorData(array $response_data) {
+  protected static function getErrorData(ResponseInterface $response) {
+    $response_data = $response->getContent();
+    if (is_null($response_data)) {
+      $response_data = array();
+    }
     $error_data = static::idx($response_data, 'error', array());
+
+    if (is_string(static::idx($error_data, 'error_data'))) {
+      $error_data["error_data"] =
+        json_decode(stripslashes(static::idx($error_data, 'error_data')), true);
+    }
 
     return array(
       'code' =>
@@ -149,34 +139,33 @@ class RequestException extends Exception {
   /**
    * Process an error payload from the Graph API and return the appropriate
    * exception subclass.
-   * @param array $response_data the decoded response from the Graph API
-   * @param int $status_code the HTTP response code
+   * @param ResponseInterface $response
    * @return RequestException
    */
-  public static function create(array $response_data, $status_code) {
-    $error_data = static::getErrorData($response_data);
+  public static function create(ResponseInterface $response) {
+    $error_data = static::getErrorData($response);
     if (in_array(
       $error_data['error_subcode'], array(458, 459, 460, 463, 464, 467))
       || in_array($error_data['code'], array(100, 102, 190))
       || $error_data['type'] === 'OAuthException') {
 
-      return new AuthorizationException($response_data, $status_code);
+      return new AuthorizationException($response);
     } elseif (in_array($error_data['code'], array(1, 2))) {
 
-      return new ServerException($response_data, $status_code);
+      return new ServerException($response);
     } elseif (in_array($error_data['code'], array(4, 17, 341))) {
 
-      return new ThrottleException($response_data, $status_code);
+      return new ThrottleException($response);
     } elseif ($error_data['code'] == 506) {
 
-      return new ClientException($response_data, $status_code);
+      return new ClientException($response);
     } elseif ($error_data['code'] == 10
       || ($error_data['code'] >= 200 && $error_data['code'] <= 299)) {
 
-      return new PermissionException($response_data, $status_code);
+      return new PermissionException($response);
     } else {
 
-      return new self($response_data, $status_code);
+      return new self($response);
     }
   }
 
@@ -184,7 +173,7 @@ class RequestException extends Exception {
    * @return int
    */
   public function getHttpStatusCode() {
-    return $this->statusCode;
+    return $this->response->getStatusCode();
   }
 
   /**
