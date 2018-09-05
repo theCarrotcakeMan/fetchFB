@@ -2,5 +2,5 @@
 return array (
   'template' => 'default',
   'baseClass' => 'Controller',
-  'actions' => 'connect, disconnect',
+  'actions' => 'do, undo',
 );

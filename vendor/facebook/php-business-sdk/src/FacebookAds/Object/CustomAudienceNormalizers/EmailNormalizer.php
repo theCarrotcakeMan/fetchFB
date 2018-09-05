@@ -45,6 +45,6 @@ class EmailNormalizer implements ValueNormalizerInterface {
    * @return string
    */
   public function normalize($key, $key_value) {
-    return trim(strtolower($key_value), ' \t\r\n\0\x0B.');
+    return trim(strtolower($key_value), " \t\r\n\0\x0B.");
   }
 }

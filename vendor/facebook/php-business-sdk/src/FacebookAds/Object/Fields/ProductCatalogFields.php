@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2014-present, Facebook, Inc. All rights reserved.
+ * Copyright (c) 2015-present, Facebook, Inc. All rights reserved.
  *
  * You are hereby granted a non-exclusive, worldwide, royalty-free license to
  * use, copy, modify, and distribute this software in source code or binary
@@ -27,12 +27,43 @@ namespace FacebookAds\Object\Fields;
 use FacebookAds\Enum\AbstractEnum;
 
 /**
- * @method static ProductCatalogFields getInstance()
+ * This class is auto-generated.
+ *
+ * For any issues or feature requests related to this class, please let us know
+ * on github and we'll fix in our codegen framework. We'll not be able to accept
+ * pull request for this class.
+ *
  */
+
 class ProductCatalogFields extends AbstractEnum {
 
-  const ID = 'id';
   const BUSINESS = 'business';
-  const EXTERNAL_EVENT_SOURCES = 'external_event_sources';
+  const DA_DISPLAY_SETTINGS = 'da_display_settings';
+  const DEFAULT_IMAGE_URL = 'default_image_url';
+  const FALLBACK_IMAGE_URL = 'fallback_image_url';
+  const FEED_COUNT = 'feed_count';
+  const FLIGHT_CATALOG_SETTINGS = 'flight_catalog_settings';
+  const ID = 'id';
   const NAME = 'name';
+  const PRODUCT_COUNT = 'product_count';
+  const QUALIFIED_PRODUCT_COUNT = 'qualified_product_count';
+  const VERTICAL = 'vertical';
+  const DESTINATION_CATALOG_SETTINGS = 'destination_catalog_settings';
+
+  public function getFieldTypes() {
+    return array(
+      'business' => 'Business',
+      'da_display_settings' => 'ProductCatalogImageSettings',
+      'default_image_url' => 'string',
+      'fallback_image_url' => 'list<string>',
+      'feed_count' => 'int',
+      'flight_catalog_settings' => 'Object',
+      'id' => 'string',
+      'name' => 'string',
+      'product_count' => 'int',
+      'qualified_product_count' => 'unsigned int',
+      'vertical' => 'string',
+      'destination_catalog_settings' => 'map',
+    );
+  }
 }

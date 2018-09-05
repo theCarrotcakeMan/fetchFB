@@ -128,7 +128,7 @@ class Client {
   public function getDefaultRequestHeaderds() {
     if ($this->defaultRequestHeaders === null) {
       $this->defaultRequestHeaders = new Headers(array(
-        'User-Agent' => 'fb-php-ads-'.Api::VERSION,
+        'User-Agent' => 'fbbizsdk-php-v'.Api::VERSION,
         'Accept-Encoding' => '*',
       ));
     }
@@ -206,16 +206,13 @@ class Client {
     $response_content = $response->getContent();
 
     if ($response_content === null) {
-      throw (new EmptyResponseException($response->getStatusCode()))
-        ->setResponse($response);
+      throw new EmptyResponseException($response);
     }
 
     if (is_array($response_content)
       && array_key_exists('error', $response_content)) {
 
-      throw RequestException::create(
-        $response->getContent(), $response->getStatusCode())
-          ->setResponse($response);
+      throw RequestException::create($response);
     }
 
     return $response;

@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2014-present, Facebook, Inc. All rights reserved.
+ * Copyright (c) 2015-present, Facebook, Inc. All rights reserved.
  *
  * You are hereby granted a non-exclusive, worldwide, royalty-free license to
  * use, copy, modify, and distribute this software in source code or binary
@@ -24,20 +24,26 @@
 
 namespace FacebookAds\Object;
 
+use FacebookAds\ApiRequest;
+use FacebookAds\Cursor;
+use FacebookAds\Http\RequestInterface;
+use FacebookAds\TypeChecker;
 use FacebookAds\Object\Fields\PartnerCategoryFields;
-use FacebookAds\Object\Traits\CannotCreate;
-use FacebookAds\Object\Traits\CannotDelete;
-use FacebookAds\Object\Traits\CannotUpdate;
-use FacebookAds\Object\Traits\FieldValidation;
+use FacebookAds\Object\Values\PartnerCategoryPrivateOrPublicValues;
+
+/**
+ * This class is auto-generated.
+ *
+ * For any issues or feature requests related to this class, please let us know
+ * on github and we'll fix in our codegen framework. We'll not be able to accept
+ * pull request for this class.
+ *
+ */
 
 class PartnerCategory extends AbstractCrudObject {
-  use CannotCreate;
-  use CannotDelete;
-  use CannotUpdate;
-  use FieldValidation;
 
   /**
-   * @return string
+   * @deprecated getEndpoint function is deprecated
    */
   protected function getEndpoint() {
     return 'partnercategories';
@@ -49,4 +55,12 @@ class PartnerCategory extends AbstractCrudObject {
   public static function getFieldsEnum() {
     return PartnerCategoryFields::getInstance();
   }
+
+  protected static function getReferencedEnums() {
+    $ref_enums = array();
+    $ref_enums['PrivateOrPublic'] = PartnerCategoryPrivateOrPublicValues::getInstance()->getValues();
+    return $ref_enums;
+  }
+
+
 }

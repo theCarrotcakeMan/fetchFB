@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (c) 2014-present, Facebook, Inc. All rights reserved.
+ * Copyright (c) 2015-present, Facebook, Inc. All rights reserved.
  *
  * You are hereby granted a non-exclusive, worldwide, royalty-free license to
  * use, copy, modify, and distribute this software in source code or binary
@@ -27,13 +27,43 @@ namespace FacebookAds\Object\Fields;
 use FacebookAds\Enum\AbstractEnum;
 
 /**
- * @method static ProductFeedUploadFields getInstance()
+ * This class is auto-generated.
+ *
+ * For any issues or feature requests related to this class, please let us know
+ * on github and we'll fix in our codegen framework. We'll not be able to accept
+ * pull request for this class.
+ *
  */
+
 class ProductFeedUploadFields extends AbstractEnum {
 
-  const ID = 'id';
-  const START_TIME = 'start_time';
   const END_TIME = 'end_time';
+  const ERROR_COUNT = 'error_count';
+  const FILENAME = 'filename';
+  const ID = 'id';
   const INPUT_METHOD = 'input_method';
+  const NUM_DELETED_ITEMS = 'num_deleted_items';
+  const NUM_DETECTED_ITEMS = 'num_detected_items';
+  const NUM_INVALID_ITEMS = 'num_invalid_items';
+  const NUM_PERSISTED_ITEMS = 'num_persisted_items';
+  const START_TIME = 'start_time';
   const URL = 'url';
+  const WARNING_COUNT = 'warning_count';
+
+  public function getFieldTypes() {
+    return array(
+      'end_time' => 'datetime',
+      'error_count' => 'int',
+      'filename' => 'string',
+      'id' => 'string',
+      'input_method' => 'InputMethod',
+      'num_deleted_items' => 'int',
+      'num_detected_items' => 'int',
+      'num_invalid_items' => 'int',
+      'num_persisted_items' => 'int',
+      'start_time' => 'datetime',
+      'url' => 'string',
+      'warning_count' => 'int',
+    );
+  }
 }
