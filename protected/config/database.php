@@ -5,10 +5,10 @@ return array(
 //	'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
 	// uncomment the following lines to use a MySQL database
 	
-	'connectionString' => 'mysql:host=localhost;ovrmind_db=testdrive',
+	'connectionString' => 'mysql:host=localhost;dbname=ovrmind_db',
 	'emulatePrepare' => true,
 	'username' => 'root',
-	'password' => '2R9xKc>xZiY)ardE',
+	'password' => 'root',
 	'charset' => 'utf8',
 	
 );
